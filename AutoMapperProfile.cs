@@ -12,7 +12,7 @@ namespace Hotel
     {
         public AutoMapperProfile()
         {
-            CreateMap<MenuItemDto,MenuItem>();
+            CreateMap<MenuItemDto,Item>();
         }
     }
 }

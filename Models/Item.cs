@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Hotel.Models
 {
-    public class MenuItem
+    public class Item
     {
-        public Guid Id { get; set; }
+        [Key]
+        public Guid ItemId { get; set; }
 
         public string Name { get; set; }
 
@@ -16,8 +18,7 @@ namespace Hotel.Models
         public string Description { get; set; }
 
         public bool IsVeg { get; set; }
-
-        public string Image { get; set; }
+        public List<Order> Orders { get; set; } = new List<Order>();
 
     }
 }

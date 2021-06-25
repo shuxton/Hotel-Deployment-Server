@@ -1,5 +1,6 @@
 ﻿using Hotel.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,20 +8,20 @@ using System.Threading.Tasks;
 
 namespace Hotel.Services
 {
-    public class Menu
+    public class MenuApplication
     {
         private readonly DataContext _dataContext;
-        public Menu(DataContext dataContext) {
+        public MenuApplication(DataContext dataContext) {
             _dataContext = dataContext;
         }
 
-        public List<MenuItem> listItem()
+        public List<Item> listItem()
         {
-            List<MenuItem> list = new List<MenuItem>();
+            List<Item> list = new List<Item>();
             
             try
             {
-                list = _dataContext.MenuItems.ToList();
+                list = _dataContext.Items.Include(o => o.Orders).ToList();
             }
             catch (Exception e)
             {
@@ -29,12 +30,12 @@ namespace Hotel.Services
             return list;
         }
 
-        public MenuItem getItem(Guid id)
+        public Item getItem(Guid id)
         {
-            MenuItem item = new MenuItem();
+            Item item = new Item();
             try
             {
-                item = _dataContext.MenuItems.FirstOrDefault(a => a.Id == id);
+                item = _dataContext.Items.FirstOrDefault(a => a.ItemId == id);
             }
             catch (Exception e)
             {
@@ -44,8 +45,8 @@ namespace Hotel.Services
 
         }
 
-        public bool addItem(MenuItem item) {
-            _dataContext.MenuItems.Add(item);
+        public bool addItem(Item item) {
+            _dataContext.Items.Add(item);
             var num = 0;
             try
             {
@@ -59,10 +60,10 @@ namespace Hotel.Services
             return false;
         }
 
-        public bool updateItem(Guid id,MenuItem item)
+        public bool updateItem(Guid id,Item item)
         {
             var num = 0;
-            var old = _dataContext.MenuItems.FirstOrDefault(a => a.Id == id);
+            var old = _dataContext.Items.FirstOrDefault(a => a.ItemId == id);
             if (old == null) return false;
             try
             {
@@ -84,11 +85,11 @@ namespace Hotel.Services
         public bool deleteItem(Guid id)
         {
             var num = 0;
-            var item = _dataContext.MenuItems.FirstOrDefault(a => a.Id == id);
+            var item = _dataContext.Items.FirstOrDefault(a => a.ItemId == id);
             if (item == null) return false;
             try
             {
-                _dataContext.MenuItems.Remove(item);
+                _dataContext.Items.Remove(item);
                 num = _dataContext.SaveChanges();
             }
             catch (Exception e)

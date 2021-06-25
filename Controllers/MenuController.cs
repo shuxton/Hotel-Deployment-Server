@@ -30,8 +30,8 @@ namespace Hotel.Controllers
         [HttpGet]
         public dynamic Get()
         {
-            Menu menu = new Menu(_datacontext);
-            List<MenuItem> list = new List<MenuItem>();
+            MenuApplication menu = new MenuApplication(_datacontext);
+            List<Item> list = new List<Item>();
             list = menu.listItem();
             if (list == null || list.Count == 0) return NotFound();
             return list;
@@ -42,8 +42,8 @@ namespace Hotel.Controllers
         [HttpGet("{id}")]
         public dynamic Get(Guid id)
         {
-            Menu menu = new Menu(_datacontext);
-            MenuItem item = menu.getItem(id);
+            MenuApplication menu = new MenuApplication(_datacontext);
+            Item item = menu.getItem(id);
             if (item == null) return NotFound();
             return item;
         }
@@ -52,9 +52,9 @@ namespace Hotel.Controllers
         [HttpPost]
         public string Post([FromBody] MenuItemDto value)
         {
-            MenuItem item =  _mapper.Map<MenuItem>(value);
+            Item item =  _mapper.Map<Item>(value);
 
-            Menu menu = new Menu(_datacontext);
+            MenuApplication menu = new MenuApplication(_datacontext);
             bool status = menu.addItem(item);
 
             if (status) return "Success";
@@ -65,9 +65,9 @@ namespace Hotel.Controllers
         [HttpPut("{id}")]
         public string Put(Guid id, [FromBody] MenuItemDto value)
         {
-            MenuItem item = _mapper.Map<MenuItem>(value);
+            Item item = _mapper.Map<Item>(value);
 
-            Menu menu = new Menu(_datacontext);
+            MenuApplication menu = new MenuApplication(_datacontext);
             bool status = menu.updateItem(id,item);
 
             if (status) return "Success";
@@ -79,7 +79,7 @@ namespace Hotel.Controllers
         public string Delete(Guid id)
         {
 
-            Menu menu = new Menu(_datacontext);
+            MenuApplication menu = new MenuApplication(_datacontext);
             bool status = menu.deleteItem(id);
 
             if (status) return "Success";
