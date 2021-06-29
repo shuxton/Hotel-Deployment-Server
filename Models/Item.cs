@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Hotel.Models
     public class Item
     {
         [Key]
-        public Guid ItemId { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 
@@ -17,8 +18,12 @@ namespace Hotel.Models
 
         public string Description { get; set; }
 
+        public string Category { get; set; }
+
         public bool IsVeg { get; set; }
-        public List<Order> Orders { get; set; } = new List<Order>();
+
+        [JsonIgnore]
+        public virtual ICollection<ItemOrder> ItemOrders { get; set; } 
 
     }
 }

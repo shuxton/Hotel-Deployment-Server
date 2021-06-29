@@ -9,8 +9,23 @@ namespace Hotel.Models
     public class Order
     {
         [Key]
-        public Guid OrderId { get; set; }
-        public DateTime time { get; set; } = new DateTime();
-        public ICollection<Item> Items { get; set; } = new List<Item>();
+        public Guid Id { get; set; }
+        public DateTime Time { get; set; } = DateTime.UtcNow;
+        public bool IsParcel { get; set; }
+        public double Total { get; set; }
+        public double GrandTotal { get; set; }
+        public double Discount { get; set; }
+        public double Others { get; set; }
+        public double CGST { get; set; } 
+        public double SGST { get; set; } 
+
+        public int OrderNo { get; set; }
+
+        public string CustomerName { get; set; }
+
+        public string CustomerPhone { get; set; }
+
+
+        public virtual ICollection<ItemOrder> ItemOrders { get; set; }
     }
 }

@@ -24,16 +24,30 @@ namespace Hotel.Controllers
         {
             _datacontext = dataContext;
             _mapper = mapper;
+           
         }
 
         // GET: api/<MenuController>
         [HttpGet]
-        public dynamic Get()
+        public List<Item> Get()
         {
+            //todo clean up seeding
+            var count = _datacontext.AdminMaster.Where(t => true).Count();
+            System.Diagnostics.Debug.WriteLine(count);
+            if (count == 0)
+            {
+
+                _datacontext.AdminMaster.Add(new AdminMaster
+                {
+                    GSTNo = "19GACSE057",
+                    RateCGST = 6,
+                    RateSGST = 6
+                });
+                _datacontext.SaveChanges();
+            }
             MenuApplication menu = new MenuApplication(_datacontext);
             List<Item> list = new List<Item>();
-            list = menu.listItem();
-            if (list == null || list.Count == 0) return NotFound();
+            list = menu.listItems();
             return list;
 
         }
@@ -50,12 +64,12 @@ namespace Hotel.Controllers
 
         // POST api/<MenuController>
         [HttpPost]
-        public string Post([FromBody] MenuItemDto value)
+        public string Post([FromBody] ItemDto value)
         {
             Item item =  _mapper.Map<Item>(value);
 
             MenuApplication menu = new MenuApplication(_datacontext);
-            bool status = menu.addItem(item);
+            bool status = menu.createItem(item);
 
             if (status) return "Success";
             else return "Something went wrong";     
@@ -63,7 +77,7 @@ namespace Hotel.Controllers
 
         // PUT api/<MenuController>/5
         [HttpPut("{id}")]
-        public string Put(Guid id, [FromBody] MenuItemDto value)
+        public string Put(Guid id, [FromBody] ItemDto value)
         {
             Item item = _mapper.Map<Item>(value);
 

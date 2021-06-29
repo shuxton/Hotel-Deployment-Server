@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hotel.DTOs
 {
-    public class MenuItemDto
+    public class ItemDto
     {
         [Required]
         public string Name { get; set; }
@@ -19,5 +19,9 @@ namespace Hotel.DTOs
 
         [Required]
         public bool IsVeg { get; set; }
+
+        [Required]
+        public string Category { get; set; }
+
     }
 }

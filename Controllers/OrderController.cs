@@ -25,29 +25,33 @@ namespace Hotel.Controllers
         }
         // GET: api/<OrderController>
         [HttpGet]
-        public dynamic Get()
+        public List<Order> Get()
         {
             OrderApplication order = new OrderApplication(_datacontext);
             List<Order> list = new List<Order>();
-            list = order.listItem();
-            if (list == null || list.Count == 0) return NotFound();
+            list = order.listOrders();
             return list;
         }
 
         // GET api/<OrderController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public dynamic Get(Guid id)
         {
-            return "value";
+            OrderApplication order = new OrderApplication(_datacontext);
+            Order item = order.getOrder(id);
+            if (item == null) return NotFound();
+            return item;
         }
 
         // POST api/<OrderController>
         [HttpPost]
         public string Post([FromBody] Request value)
         {
+            Order newOrder = _mapper.Map<Order>(value.orderDto);
+
             OrderApplication order = new OrderApplication(_datacontext);
             
-            bool status = order.addItem(value.id);
+            bool status = order.createOrder(value.ids,newOrder);
 
             if (status) return "Success";
             else return "Something went wrong";

@@ -7,6 +7,7 @@ namespace Hotel.DTOs
 {
     public class Request
     {
-        public Guid id { get; set; }
+        public Guid [] ids { get; set; }
+        public OrderDto orderDto { get; set; }
     }
 }
