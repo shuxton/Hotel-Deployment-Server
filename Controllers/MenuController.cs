@@ -43,6 +43,15 @@ namespace Hotel.Controllers
                     RateCGST = 6,
                     RateSGST = 6
                 });
+
+                _datacontext.Categories.Add(new Category
+                {
+                    Name = "Chinese"
+                });
+                _datacontext.Categories.Add(new Category
+                {
+                    Name = "North Indian"
+                });
                 _datacontext.SaveChanges();
             }
             MenuApplication menu = new MenuApplication(_datacontext);

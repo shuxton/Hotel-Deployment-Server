@@ -64,7 +64,9 @@ namespace Hotel.Migrations
                     SGST = table.Column<double>(type: "float", nullable: false),
                     OrderNo = table.Column<int>(type: "int", nullable: false),
                     CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomerPhone = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    CustomerPhone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Paid = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -83,17 +85,17 @@ namespace Hotel.Migrations
                 {
                     table.PrimaryKey("PK_ItemOrder", x => new { x.ItemId, x.OrderId });
                     table.ForeignKey(
-                        name: "FK_ItemOrder_Items_ItemId",
-                        column: x => x.ItemId,
+                        name: "FK_ItemOrder_Items_OrderId",
+                        column: x => x.OrderId,
                         principalTable: "Items",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ItemOrder_Orders_OrderId",
-                        column: x => x.OrderId,
+                        name: "FK_ItemOrder_Orders_ItemId",
+                        column: x => x.ItemId,
                         principalTable: "Orders",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

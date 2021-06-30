@@ -18,5 +18,9 @@ namespace Hotel.DTOs
         public string CustomerName { get; set; }
         [Required]
         public string CustomerPhone { get; set; }
+        [Required]
+        public bool Paid { get; set; }
+
     }
+
 }

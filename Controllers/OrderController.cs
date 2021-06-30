@@ -45,13 +45,13 @@ namespace Hotel.Controllers
 
         // POST api/<OrderController>
         [HttpPost]
-        public string Post([FromBody] Request value)
+        public string Post([FromBody] CreateOrderRequest value)
         {
-            Order newOrder = _mapper.Map<Order>(value.orderDto);
+            Order newOrder = _mapper.Map<Order>(value.OrderDto);
 
             OrderApplication order = new OrderApplication(_datacontext);
             
-            bool status = order.createOrder(value.ids,newOrder);
+            bool status = order.createOrder(value.Ids,newOrder);
 
             if (status) return "Success";
             else return "Something went wrong";
@@ -59,14 +59,14 @@ namespace Hotel.Controllers
 
         // PUT api/<OrderController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public string Put(Guid id,[FromBody] UpdateOrderRequest value)
         {
-        }
+            OrderApplication order = new OrderApplication(_datacontext);
 
-        // DELETE api/<OrderController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            bool status = order.updateOrder(id,value.Status,value.Paid);
+
+            if (status) return "Success";
+            else return "Something went wrong";
         }
     }
 }

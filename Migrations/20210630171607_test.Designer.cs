@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hotel.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210629140118_test")]
+    [Migration("20210630171607_test")]
     partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -129,8 +129,14 @@ namespace Hotel.Migrations
                     b.Property<double>("Others")
                         .HasColumnType("float");
 
+                    b.Property<bool>("Paid")
+                        .HasColumnType("bit");
+
                     b.Property<double>("SGST")
                         .HasColumnType("float");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Time")
                         .HasColumnType("datetime2");
@@ -145,16 +151,16 @@ namespace Hotel.Migrations
 
             modelBuilder.Entity("Hotel.Models.ItemOrder", b =>
                 {
-                    b.HasOne("Hotel.Models.Item", "Item")
-                        .WithMany("ItemOrders")
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Hotel.Models.Order", "Order")
                         .WithMany("ItemOrders")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Hotel.Models.Item", "Item")
+                        .WithMany("ItemOrders")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Item");

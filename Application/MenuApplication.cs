@@ -51,23 +51,24 @@ namespace Hotel.Services
         public bool createItem(Item item)
         {
             _dataContext.Items.Add(item);
-            var num = 0;
+            
             try
             {
-                num = _dataContext.SaveChanges();
+               _dataContext.SaveChanges();
+
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e);
+                return false;
             }
-            if (num > 0)
+            
                 return true;
-            return false;
+           
         }
 
         public bool updateItem(Guid id, Item item)
         {
-            var num = 0;
             var old = _dataContext.Items.FirstOrDefault(a => a.Id == id);
             if (old == null) return false;
             try
@@ -78,34 +79,31 @@ namespace Hotel.Services
                 old.Description = item.Description;
                 old.Category = item.Category;
 
-                num = _dataContext.SaveChanges();
+                 _dataContext.SaveChanges();
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e);
+                return false;
             }
-            if (num > 0)
                 return true;
-            return false;
         }
 
         public bool deleteItem(Guid id)
         {
-            var num = 0;
             var item = _dataContext.Items.FirstOrDefault(a => a.Id == id);
             if (item == null) return false;
             try
             {
                 _dataContext.Items.Remove(item);
-                num = _dataContext.SaveChanges();
+               _dataContext.SaveChanges();
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e);
+                return false;
             }
-            if (num > 0)
                 return true;
-            return false;
         }
 
     }

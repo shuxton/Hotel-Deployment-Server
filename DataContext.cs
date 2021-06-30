@@ -28,6 +28,8 @@ namespace Hotel
 
             builder.Entity<ItemOrder>()
             .HasKey(x => new { x.ItemId, x.OrderId });
+            
+           
         }
     }
 }

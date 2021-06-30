@@ -25,6 +25,9 @@ namespace Hotel.Models
 
         public string CustomerPhone { get; set; }
 
+        public string Status { get; set; }
+
+        public bool Paid { get; set; }
 
         public virtual ICollection<ItemOrder> ItemOrders { get; set; }
     }
