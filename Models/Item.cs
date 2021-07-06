@@ -21,6 +21,8 @@ namespace Hotel.Models
         public string Category { get; set; }
 
         public bool IsVeg { get; set; }
+        public bool Deleted { get; set; } = false;
+
 
         [JsonIgnore]
         public virtual ICollection<ItemOrder> ItemOrders { get; set; } 

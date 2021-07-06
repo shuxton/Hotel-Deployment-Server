@@ -24,7 +24,7 @@ namespace Hotel.Services
 
             try
             {
-                list = _dataContext.Items.ToList();
+                list = _dataContext.Items.Where(a=>!a.Deleted).ToList();
             }
             catch (Exception e)
             {
@@ -95,7 +95,7 @@ namespace Hotel.Services
             if (item == null) return false;
             try
             {
-                _dataContext.Items.Remove(item);
+                item.Deleted = true;
                _dataContext.SaveChanges();
             }
             catch (Exception e)
